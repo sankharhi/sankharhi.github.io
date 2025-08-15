@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Formulir Data Diri</title>
+        <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        h3 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="date"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #date-group {
+            cursor: pointer;
+        }
+    </style>
+    </head>
+    <body>
+
+        <div class="form-container">
+            <img src="assets/logo.png" alt="Logo"
+                style="display: block; margin: 0 auto 1rem; width: 200px; height: auto;">
+            <h2>Form Data Diri</h2>
+            <h3>Nama Program</h3>
+            <form id="data-form">
+                <div class="form-group">
+                    <label for="nama">Nama Lengkap:</label>
+                    <input type="text" id="nama" name="nama_lengkap"
+                        placeholder="Masukkan nama Anda" required>
+                </div>
+                <div class="form-group" id="date-group">
+                    <label for="tanggal_lahir">Tanggal Lahir:</label>
+                    <input type="date" id="tanggal_lahir" name="tanggal_lahir"
+                        required>
+                </div>
+                <button type="submit" id="submit-button">Submit</button>
+            </form>
+            <p id="status-message"
+                style="text-align: center; margin-top: 1rem; font-weight: bold;"></p>
+        </div>
+
+        <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyvfDOwFna8g2Q5EtwKBsNdkfTxZ0svjGGqm8qWhI2cUUxyS3tEWjV53Uu-tzgTgWwgzw/exec'; 
+        
+        const form = document.getElementById('data-form');
+        const submitButton = document.getElementById('submit-button');
+        const statusMessage = document.getElementById('status-message');
+
+        const dateGroup = document.getElementById('date-group');
+        const namaLengkap = document.getElementById('nama');
+        const tanggalLahirInput = document.getElementById('tanggal_lahir');
+
+        dateGroup.addEventListener('click', () => {
+            if (typeof tanggalLahirInput.showPicker === 'function') {
+                tanggalLahirInput.showPicker();
+            } else {
+                tanggalLahirInput.focus();
+            }
+        });
+
+        form.addEventListener('submit', e => {
+            e.preventDefault(); 
+
+            const birthDateString = tanggalLahirInput.value;
+            const birthDate = new Date(birthDateString);
+            const today = new Date();
+
+            today.setHours(0, 0, 0, 0);
+
+            if (isNaN(birthDate.getTime()) || birthDate > today) {
+                statusMessage.textContent = 'Tanggal lahir tidak valid atau berada di masa depan.';
+                statusMessage.style.color = 'red';
+                return;
+            }
+
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDifference = today.getMonth() - birthDate.getMonth();
+            if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            submitButton.disabled = true;
+            submitButton.textContent = 'Mengirim...';
+            statusMessage.textContent = '';
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => response.json())
+                .then(data => {
+                    const params = new URLSearchParams({
+                        nama: namaLengkap.value
+                    });               
+                    if (age >= 18) {
+                        window.location.href = `video.html?${params.toString()}`;
+                        return; 
+                    }
+                    window.location.href = `sukses.html?${params.toString()}`;
+                })
+                .catch(error => {
+                    statusMessage.textContent = 'Terjadi kesalahan. Silakan coba lagi.';
+                    statusMessage.style.color = 'red';
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Kirim';
+                });
+        });
+    </script>
+    </body>
+</html>
