@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Play Audio</title>
+</head>
+<body>
+  <audio id="player" controls>
+    <source src="assets/audio.mp3" type="audio/mpeg">
+    Browser kamu tidak mendukung pemutar audio.
+  </audio>
+
+  <script>
+    const audio = document.getElementById("player");
+
+    audio.play().catch(() => {
+      console.log("Autoplay diblokir, tunggu klik user...");
+    });
+
+    document.addEventListener("click", () => {
+      audio.play();
+    }, { once: true });
+  </script>
+</body>
+</html>
