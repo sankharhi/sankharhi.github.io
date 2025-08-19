@@ -54,7 +54,7 @@
         </div>
 
         <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzsNpg2FWU8ibi0Sl-se_Spj0PW4lhPS7ZTtwpHnh03bYFbbsS_CNE5sR2WASrKwRshxA/exec'; 
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyxjdNjFiNDHIKkprW9pSZFIvIfMfuz5-akhDk3jo7u7EmwaU-b5v_MDaUAYU-PH6Al8A/exec'; 
         
         const form = document.getElementById('data-form');
         const submitButton = document.getElementById('submit-button');
@@ -99,7 +99,6 @@
             
             document.getElementById("loading").classList.remove("hidden");
             fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-                .then(response => response.json())
                 .then(data => {
                     const params = new URLSearchParams({
                         nama: namaLengkap.value
