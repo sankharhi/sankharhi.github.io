@@ -96,34 +96,29 @@
             submitButton.disabled = true;
             submitButton.textContent = 'Mengirim...';
             statusMessage.textContent = '';
-
-            // fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-            // .catch(error => console.error('Error kirim data:', error));
-
-            // // langsung redirect tanpa nunggu respon
-            // const params = new URLSearchParams({ nama: namaLengkap.value });
-            // window.location.href = `video.html?${params.toString()}`;
+            
             document.getElementById("loading").classList.remove("hidden");
             fetch(scriptURL, { method: 'POST', body: new FormData(form) })
                 .then(response => response.json())
                 .then(data => {
+                    dssd
                     const params = new URLSearchParams({
                         nama: namaLengkap.value
                     });               
-                    // if (age >= 18) {
-                    //     window.location.href = `video.html?${params.toString()}`;
-                    //     return; 
-                    // }
-                    // window.location.href = `sukses.html?${params.toString()}`;
                     window.location.href = `video.html?${params.toString()}`;
-                    // window.location.replace(`video.html?${params.toString()}`);
                 })
                 .catch(error => {
-                    document.getElementById("loading").classList.add("hidden");
-                    statusMessage.textContent = 'Terjadi kesalahan. Silakan coba lagi.';
-                    statusMessage.style.color = 'red';
-                    submitButton.disabled = false;
-                    submitButton.textContent = 'Kirim';
+                    console.error('Error submitting form:', error);
+                    const loadingDiv = document.getElementById("loading");
+                    loadingDiv.innerHTML = `
+                        <div class="bg-white p-8 rounded-lg shadow-md text-center max-w-sm mx-4">
+                            <h2 class="text-2xl font-bold text-red-600 mb-4">Terjadi kesalahan!</h2>
+                            <p class="text-gray-700 mb-6">Periksa koneksi Anda atau coba lagi.</p>
+                            <button onclick="location.reload()" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Coba Lagi
+                            </button>
+                        </div>
+                    `;
                 });
         });
     </script>
