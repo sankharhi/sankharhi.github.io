@@ -3,91 +3,54 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
         <title>Formulir Data Diri</title>
-        <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f4f4f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .form-container {
-            background: #fff;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-        h3 {
-            text-align: center;
-            color: #333;
-        }
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #555;
-            font-weight: bold;
-        }
-        input[type="text"], input[type="date"] {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        button {
-            width: 100%;
-            padding: 0.75rem;
-            border: none;
-            background-color: #007bff;
-            color: white;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        #date-group {
-            cursor: pointer;
-        }
-    </style>
+        <script src="assets/js/tailwind.js"></script>
     </head>
-    <body>
-
-        <div class="form-container">
-            <img src="assets/logo.png" alt="Logo"
-                style="display: block; margin: 0 auto 1rem; width: 200px; height: auto;">
-            <h2>Form Data Diri</h2>
-            <h3>Nama Program</h3>
-            <form id="data-form">
-                <div class="form-group">
-                    <label for="nama">Nama Lengkap:</label>
-                    <input type="text" id="nama" name="nama_lengkap"
-                        placeholder="Masukkan nama Anda" required>
+    <body class="bg-gradient-to-b from-sky-800 to-cyan-700">
+        <div
+            class="flex flex-col items-center justify-center min-h-screen p-4 ">
+            <div
+                class="w-full max-w-md bg-white p-6 md:p-8 rounded-lg shadow-md">
+                <img src="assets/logo.png" alt="Logo"
+                    class="block mx-auto mb-4 w-40 h-auto">
+                <h2 class="text-2xl font-bold text-center mb-2">Form Data
+                    Diri</h2>
+                <h3
+                    class="text-lg text-gray-900 text-center mb-6 font-bold">Nama
+                    Program</h3>
+                <form id="data-form">
+                    <div class="mb-4">
+                        <label for="nama"
+                            class="block text-gray-700 text-sm font-bold mb-2">Nama
+                            Lengkap:</label>
+                        <input type="text" id="nama" name="nama_lengkap"
+                            placeholder="Masukkan nama Anda" required
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="mb-6" id="date-group">
+                        <label for="tanggal_lahir"
+                            class="block text-gray-700 text-sm font-bold mb-2">Tanggal
+                            Lahir:</label>
+                        <input type="date" id="tanggal_lahir"
+                            name="tanggal_lahir" required
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline cursor-pointer">
+                    </div>
+                    <button type="submit" id="submit-button"
+                        class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:bg-blue-300 disabled:cursor-not-allowed cursor-pointer">
+                        Kirim
+                    </button>
+                </form>
+                <div id="loading"
+                    class="fixed inset-0 bg-black/50 flex items-center justify-center flex-col hidden">
+                    <!-- <div class="bg-white p-4 rounded-lg shadow-md"> -->
+                        <img src="assets/loading.gif" alt="Loading..."
+                            class="mx-auto -mb-2 w-28 h-auto">
+                        <p class="text-white text-lg font-bold">Mengirim data...</p>
+                    <!-- </div> -->
                 </div>
-                <div class="form-group" id="date-group">
-                    <label for="tanggal_lahir">Tanggal Lahir:</label>
-                    <input type="date" id="tanggal_lahir" name="tanggal_lahir"
-                        required>
-                </div>
-                <button type="submit" id="submit-button">Submit</button>
-            </form>
-            <p id="status-message"
-                style="text-align: center; margin-top: 1rem; font-weight: bold;"></p>
+                <p id="status-message" class="text-center mt-4 font-bold"></p>
+            </div>
         </div>
 
         <script>
@@ -134,17 +97,26 @@
             submitButton.textContent = 'Mengirim...';
             statusMessage.textContent = '';
 
+            // fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+            // .catch(error => console.error('Error kirim data:', error));
+
+            // // langsung redirect tanpa nunggu respon
+            // const params = new URLSearchParams({ nama: namaLengkap.value });
+            // window.location.href = `video.html?${params.toString()}`;
+            document.getElementById("loading").classList.remove("hidden");
             fetch(scriptURL, { method: 'POST', body: new FormData(form) })
                 .then(response => response.json())
                 .then(data => {
                     const params = new URLSearchParams({
                         nama: namaLengkap.value
                     });               
-                    if (age >= 18) {
-                        window.location.href = `video.html?${params.toString()}`;
-                        return; 
-                    }
-                    window.location.href = `sukses.html?${params.toString()}`;
+                    // if (age >= 18) {
+                    //     window.location.href = `video.html?${params.toString()}`;
+                    //     return; 
+                    // }
+                    // window.location.href = `sukses.html?${params.toString()}`;
+                    window.location.href = `video.html?${params.toString()}`;
+                    // window.location.replace(`video.html?${params.toString()}`);
                 })
                 .catch(error => {
                     statusMessage.textContent = 'Terjadi kesalahan. Silakan coba lagi.';

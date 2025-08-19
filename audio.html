@@ -1,70 +1,40 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memutar Audio</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f4f4f9;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-        }
-        .container {
-            background: #fff;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            max-width: 400px;
-            width: 90%;
-        }
-        h1 {
-            color: #333;
-        }
-        p {
-            color: #555;
-            font-size: 1.1rem;
-        }
-        audio {
-            width: 100%;
-            margin-top: 1.5rem;
-        }
-        .footer {
-            display: flex;
-            align-items: flex-end;
-        }
-    </style>
-</head>
-<body>
-    <div class="header"></div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+        <title>Memutar Audio</title>
+        <script src="assets/js/tailwind.js"></script>
+    </head>
+    <body class="bg-gradient-to-b from-sky-800 to-cyan-700">
+        <div class="flex flex-col items-center justify-center min-h-screen p-4">
 
-    <div class="container">
-        <h1>Nama Program</h1>
-        <p>Audio akan diputar secara otomatis. Jika tidak, silakan klik di mana saja.</p>
-        <audio id="player" controls autoplay>
-            <source src="assets/audio.mp3" type="audio/mpeg">
-            Browser Anda tidak mendukung pemutar audio.
-        </audio>
-    </div>
+            <div
+                class="w-full max-w-md bg-white p-6 md:p-8 rounded-lg shadow-md text-center">
+                <h1 class="text-2xl font-bold text-gray-800 mb-2">Nama
+                    Program</h1>
+                <p class="text-gray-600 mb-6">Audio akan diputar secara
+                    otomatis. Jika tidak, silakan klik di mana saja.</p>
+                <audio id="player" controls autoplay class="w-full">
+                    <source src="assets/audio.mp3" type="audio/mpeg">
+                    Browser Anda tidak mendukung pemutar audio.
+                </audio>
+            </div>
 
-    <div class="footer">
-        <img src="assets/logo.png" alt="Logo"
-            style="display: block; margin: 0 auto 1rem; width: 100px; height: auto;">
-    </div>
+            <div class="flex items-center justify-center mt-8 gap-x-8 max-w-md w-full bg-white rounded-lg shadow-md overflow-hidden p-2">
+                <img src="assets/logo.png" alt="Logo" class="w-24 h-auto">
+            </div>
 
-    <script>
+        </div>
+
+        <script>
         const audio = document.getElementById("player");
         const h1 = document.querySelector('h1');
 
         const urlParams = new URLSearchParams(window.location.search);
         const nama = urlParams.get('nama');
-        
+
         if (nama) {
             h1.textContent = `Halo, ${nama}!`;
         }
@@ -77,5 +47,5 @@
             }, { once: true });
         });
     </script>
-</body>
+    </body>
 </html>
