@@ -119,6 +119,7 @@
                     // window.location.replace(`video.html?${params.toString()}`);
                 })
                 .catch(error => {
+                    document.getElementById("loading").classList.add("hidden");
                     statusMessage.textContent = 'Terjadi kesalahan. Silakan coba lagi.';
                     statusMessage.style.color = 'red';
                     submitButton.disabled = false;
