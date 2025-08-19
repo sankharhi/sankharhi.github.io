@@ -54,7 +54,7 @@
         </div>
 
         <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbw0tQpRRX8BhfogK5gr0QmPxerni4row02N-oGAhj2qzVQtMBEX6gj9cQhUq9LfD9oncw/exec'; 
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzsNpg2FWU8ibi0Sl-se_Spj0PW4lhPS7ZTtwpHnh03bYFbbsS_CNE5sR2WASrKwRshxA/exec'; 
         
         const form = document.getElementById('data-form');
         const submitButton = document.getElementById('submit-button');
@@ -107,6 +107,7 @@
                     window.location.href = `video.html?${params.toString()}`;
                 })
                 .catch(error => {
+                    console.log('Error submitting form:', error);
                     console.error('Error submitting form:', error);
                     const loadingDiv = document.getElementById("loading");
                     loadingDiv.innerHTML = `
