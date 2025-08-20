@@ -99,9 +99,9 @@
             
             document.getElementById("loading").classList.remove("hidden");
             fetch(scriptURL, {
-                redirect: "follow", 
-                method: 'POST', 
-                body: new FormData(form)
+                method: 'POST',
+                body: new FormData(form),
+                mode: 'no-cors'
             }).then(data => {
                     const params = new URLSearchParams({
                         nama: namaLengkap.value
@@ -120,7 +120,7 @@
                         </div>
                     `;
                 });
-        });
+            });
     </script>
     </body>
 </html>
