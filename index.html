@@ -101,10 +101,7 @@
             fetch(scriptURL, {
                 redirect: "follow", 
                 method: 'POST', 
-                body: new FormData(form), 
-                headers: {
-                    "Content-Type": "application/json;charset=UTF-8",
-                },
+                body: new FormData(form)
             }).then(data => {
                     const params = new URLSearchParams({
                         nama: namaLengkap.value
