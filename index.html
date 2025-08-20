@@ -44,9 +44,9 @@
                 <div id="loading"
                     class="fixed inset-0 bg-black/50 flex items-center justify-center flex-col hidden">
                     <!-- <div class="bg-white p-4 rounded-lg shadow-md"> -->
-                    <img src="assets/loading.gif" alt="Loading..."
-                        class="mx-auto -mb-2 w-28 h-auto">
-                    <p class="text-white text-lg font-bold">Mengirim data...</p>
+                        <img src="assets/loading.gif" alt="Loading..."
+                            class="mx-auto -mb-2 w-28 h-auto">
+                        <p class="text-white text-lg font-bold">Mengirim data...</p>
                     <!-- </div> -->
                 </div>
                 <p id="status-message" class="text-center mt-4 font-bold"></p>
@@ -54,7 +54,7 @@
         </div>
 
         <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbyECYVqB1D-rORS76UCJfJFHPLj--XQLkuq-TeL1L8RGBOTfhxlSYSkGSZhJLV0nvP_mw/exec'; 
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbz0qHvSFRjAJ3ZTtZVAcTHvV-4MPUmAF9RUgYeSQmBHLQnMUW9gw1YLydhsMSgDzcwUIQ/exec'; 
         
         const form = document.getElementById('data-form');
         const submitButton = document.getElementById('submit-button');
@@ -98,11 +98,15 @@
             statusMessage.textContent = '';
             
             document.getElementById("loading").classList.remove("hidden");
-            fetch(scriptURL, {
-                method: 'POST',
-                body: new FormData(form),
-                mode: 'no-cors'
-            }).then(data => {
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Network response was not ok');
+                    }
+                })
+                .then(data => {
                     const params = new URLSearchParams({
                         nama: namaLengkap.value
                     });               
@@ -120,7 +124,7 @@
                         </div>
                     `;
                 });
-            });
+        });
     </script>
     </body>
 </html>
