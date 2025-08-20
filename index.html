@@ -44,9 +44,9 @@
                 <div id="loading"
                     class="fixed inset-0 bg-black/50 flex items-center justify-center flex-col hidden">
                     <!-- <div class="bg-white p-4 rounded-lg shadow-md"> -->
-                        <img src="assets/loading.gif" alt="Loading..."
-                            class="mx-auto -mb-2 w-28 h-auto">
-                        <p class="text-white text-lg font-bold">Mengirim data...</p>
+                    <img src="assets/loading.gif" alt="Loading..."
+                        class="mx-auto -mb-2 w-28 h-auto">
+                    <p class="text-white text-lg font-bold">Mengirim data...</p>
                     <!-- </div> -->
                 </div>
                 <p id="status-message" class="text-center mt-4 font-bold"></p>
@@ -98,8 +98,14 @@
             statusMessage.textContent = '';
             
             document.getElementById("loading").classList.remove("hidden");
-            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-                .then(data => {
+            fetch(scriptURL, {
+                redirect: "follow", 
+                method: 'POST', 
+                body: new FormData(form), 
+                headers: {
+                    "Content-Type": "application/json;charset=UTF-8",
+                },
+            }).then(data => {
                     const params = new URLSearchParams({
                         nama: namaLengkap.value
                     });               
